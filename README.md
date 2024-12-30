@@ -33,7 +33,7 @@ This repository demonstrates the creation and use of a Jenkins Shared Library (J
 
 ### 1. Clone the Repository
 
-Clone this repository to your local machine:
+Create the repository on GitHub and clone it to local machine:
 
 ```bash
 git clone https://github.com/irschad/jenkins-shared-lib.git
@@ -44,7 +44,7 @@ cd jenkins-shared-lib
 
 ### 2. Define Shared Library Functions
 
-The `vars` folder contains the following reusable functions:
+Create the `vars` folder containing the following files for reusable functions:
 
 #### `buildImage.groovy`
 ```groovy
@@ -86,13 +86,7 @@ def call(String imageName) {
 }
 ```
 
-Commit and push the files to your repository if you make any modifications:
-
-```bash
-git add vars/*
-git commit -m "Update shared library functions"
-git push
-```
+Commit and push the files to the repository.
 
 ---
 
@@ -105,7 +99,7 @@ git push
    - **Default Version:** `main`
    - **Source Code Management:** Git.
    - **Repository URL:** `https://github.com/irschad/jenkins-shared-lib.git`
-   - **Credentials:** Configure if required.
+   - **Credentials:** Configure as needed.
 
 #### Step 2: Use the Shared Library in a Pipeline
 In your project’s `Jenkinsfile`, include the shared library and call its functions:
@@ -143,7 +137,7 @@ pipeline {
 If you prefer not to configure the shared library globally, reference it directly in your project’s `Jenkinsfile`:
 
 ```groovy
-library identifier: 'jenkins-shared-library@main', retriever: modernSCM([
+library identifier: 'jenkins-shared-library@master', retriever: modernSCM([
     $class: 'GitSCMSource',
     remote: 'https://github.com/irschad/jenkins-shared-lib.git',
     credentialsId: 'GitHub'
@@ -166,6 +160,8 @@ pipeline {
             steps {
                 script {
                     buildImage('irschad/java-app:2.0')
+                    dockerLogin()
+                    dockerPush('irschad/java-app:2.0')
                 }
             }
         }
@@ -175,11 +171,5 @@ pipeline {
 
 ---
 
-## Example Reference
-For further insights, refer to the repository: [Jenkins Shared Library](https://github.com/irschad/jenkins-shared-lib).
 
----
-
-## License
-This project is licensed under the [MIT License](LICENSE).
 
