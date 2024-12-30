@@ -124,6 +124,8 @@ pipeline {
             steps {
                 script {
                     buildImage('irschad/java-app:2.0')
+                    dockerLogin()
+                    dockerPush('irschad/java-app:2.0')
                 }
             }
         }
